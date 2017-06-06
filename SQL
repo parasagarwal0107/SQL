@@ -1,0 +1,385 @@
+ syntax to use near 'varchar2(20),Last_Name varchar2(20),Emp_Id int,Salary int)' at line 1
+mysql> create table emp(First_Name varchar(20),Last_Name varchar(20),Emp_Id int,Salary int);
+Query OK, 0 rows affected (0.62 sec)
+
+mysql> insert into emp values("Paras","Agarwal",1,400000);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into emp values("Mohit","Agarwal",2,200000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into emp values("Rohit","Agarwal",3,300000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> desc emp;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| First_Name | varchar(20) | YES  |     | NULL    |       |
+| Last_Name  | varchar(20) | YES  |     | NULL    |       |
+| Emp_Id     | int(11)     | YES  |     | NULL    |       |
+| Salary     | int(11)     | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> show emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'emp' at line 1
+mysql> show table emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'emp' at line 1
+mysql> select * from emp;
++------------+-----------+--------+--------+
+| First_Name | Last_Name | Emp_Id | Salary |
++------------+-----------+--------+--------+
+| Paras      | Agarwal   |      1 | 400000 |
+| Mohit      | Agarwal   |      2 | 200000 |
+| Rohit      | Agarwal   |      3 | 300000 |
++------------+-----------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select First_Name from emp where Emp_Id=1;
++------------+
+| First_Name |
++------------+
+| Paras      |
++------------+
+1 row in set (0.06 sec)
+
+mysql> select First_Name from emp;
++------------+
+| First_Name |
++------------+
+| Paras      |
+| Mohit      |
+| Rohit      |
++------------+
+3 rows in set (0.00 sec)
+
+mysql> select First_Name,Last_Name from emp;
++------------+-----------+
+| First_Name | Last_Name |
++------------+-----------+
+| Paras      | Agarwal   |
+| Mohit      | Agarwal   |
+| Rohit      | Agarwal   |
++------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select DISTINCT(Last_Name) from emp;
++-----------+
+| Last_Name |
++-----------+
+| Agarwal   |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> alter table emp add desig varchar(20);
+Query OK, 0 rows affected (0.53 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc emp;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| First_Name | varchar(20) | YES  |     | NULL    |       |
+| Last_Name  | varchar(20) | YES  |     | NULL    |       |
+| Emp_Id     | int(11)     | YES  |     | NULL    |       |
+| Salary     | int(11)     | YES  |     | NULL    |       |
+| desig      | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp;
++------------+-----------+--------+--------+-------+
+| First_Name | Last_Name | Emp_Id | Salary | desig |
++------------+-----------+--------+--------+-------+
+| Paras      | Agarwal   |      1 | 400000 | NULL  |
+| Mohit      | Agarwal   |      2 | 200000 | NULL  |
+| Rohit      | Agarwal   |      3 | 300000 | NULL  |
++------------+-----------+--------+--------+-------+
+3 rows in set (0.01 sec)
+
+mysql> update emp set desig="Software_Engg" where Emp-Id=1;
+ERROR 1054 (42S22): Unknown column 'Emp' in 'where clause'
+mysql> update emp set desig="Software_Engg" where Emp_Id=1;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update emp set desig="Tester" where Emp_Id=2;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update emp set desig="Analyst" where Emp_Id=3;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++------------+-----------+--------+--------+---------------+
+| First_Name | Last_Name | Emp_Id | Salary | desig         |
++------------+-----------+--------+--------+---------------+
+| Paras      | Agarwal   |      1 | 400000 | Software_Engg |
+| Mohit      | Agarwal   |      2 | 200000 | Tester        |
+| Rohit      | Agarwal   |      3 | 300000 | Analyst       |
++------------+-----------+--------+--------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select salary from emp where Emp_Id=1 AND Emp_Id=4;
+Empty set (0.01 sec)
+
+mysql> select salary from emp where Emp_Id=1 AND Emp_Id=2;
+Empty set (0.00 sec)
+
+mysql> select salary from emp where Emp_Id="1" AND Emp_Id="2";
+Empty set (0.00 sec)
+
+mysql> select salary from emp where Emp_Id="1" AND LAst_Name="Agarwal";
++--------+
+| salary |
++--------+
+| 400000 |
++--------+
+1 row in set (0.01 sec)
+
+mysql> select salary from emp order by asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc' at line 1
+mysql> select salary from emp order by salary asc;
++--------+
+| salary |
++--------+
+| 200000 |
+| 300000 |
+| 400000 |
++--------+
+3 rows in set (0.01 sec)
+
+mysql> select salary from emp order by First_Name asc;
++--------+
+| salary |
++--------+
+| 200000 |
+| 400000 |
+| 300000 |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select FIsrt_Name from emp order by First_Name asc;
+ERROR 1054 (42S22): Unknown column 'FIsrt_Name' in 'field list'
+mysql> select Fisrt_Name from emp order by First_Name asc;
+ERROR 1054 (42S22): Unknown column 'Fisrt_Name' in 'field list'
+mysql> select Fisrt_Name from emp order by First_Name asc;
+ERROR 1054 (42S22): Unknown column 'Fisrt_Name' in 'field list'
+mysql> select First_Name from emp order by First_Name asc;
++------------+
+| First_Name |
++------------+
+| Mohit      |
+| Paras      |
+| Rohit      |
++------------+
+3 rows in set (0.00 sec)
+
+mysql> select First_Name from emp order by First_Name dsc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dsc' at line 1
+mysql> select First_Name from emp order by First_Name desc;
++------------+
+| First_Name |
++------------+
+| Rohit      |
+| Paras      |
+| Mohit      |
++------------+
+3 rows in set (0.00 sec)
+
+mysql> select salary from emp where salary<=400000 limit 3;
++--------+
+| salary |
++--------+
+| 400000 |
+| 200000 |
+| 300000 |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select salary from emp where salary<=300000 limit 3;
++--------+
+| salary |
++--------+
+| 200000 |
+| 300000 |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp;
++------------+-----------+--------+--------+---------------+
+| First_Name | Last_Name | Emp_Id | Salary | desig         |
++------------+-----------+--------+--------+---------------+
+| Paras      | Agarwal   |      1 | 400000 | Software_Engg |
+| Mohit      | Agarwal   |      2 | 200000 | Tester        |
+| Rohit      | Agarwal   |      3 | 300000 | Analyst       |
++------------+-----------+--------+--------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select salary from emp where salary<=300000 limit 2;
++--------+
+| salary |
++--------+
+| 200000 |
+| 300000 |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select salary from emp where salary<=400000 limit 2;
++--------+
+| salary |
++--------+
+| 400000 |
+| 200000 |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select salary from emp where salary<=400000 and (select salary from emp order by asc) limit 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc) limit 2' at line 1
+mysql> select salary from emp where salary<=400000,select salary from emp order by asc limit 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select salary from emp order by asc limit 2' at line 1
+mysql> select salary=(select salary from emp order by asc) from emp where salary<=400000 limit 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc) from emp where salary<=400000 limit 2' at line 1
+mysql> select salary=(select salary from emp order by salary asc) from emp where salary<=400000 limit 2;
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select salary where select salary from emp order by salary asc) from emp where salary<=400000 limit 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where select salary from emp order by salary asc) from emp where salary<=400000 ' at line 1
+mysql> select * from emp;
++------------+-----------+--------+--------+---------------+
+| First_Name | Last_Name | Emp_Id | Salary | desig         |
++------------+-----------+--------+--------+---------------+
+| Paras      | Agarwal   |      1 | 400000 | Software_Engg |
+| Mohit      | Agarwal   |      2 | 200000 | Tester        |
+| Rohit      | Agarwal   |      3 | 300000 | Analyst       |
++------------+-----------+--------+--------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select salary from emp where salary<=400000 limit 2;
++--------+
+| salary |
++--------+
+| 400000 |
+| 200000 |
++--------+
+2 rows in set (0.01 sec)
+
+mysql> select count(salary) from emp where salary<=400000;
++---------------+
+| count(salary) |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.04 sec)
+
+mysql> select count(salary) from emp group by desig;
++---------------+
+| count(salary) |
++---------------+
+|             1 |
+|             1 |
+|             1 |
++---------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(salary) from emp;
++---------------+
+| count(salary) |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select count(salary) from emp group by Last_name;
++---------------+
+| count(salary) |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(salary) from emp;
++-------------+
+| sum(salary) |
++-------------+
+|      900000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> create view par from emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from emp' at line 1
+mysql> create view par as select * from emp;;
+Query OK, 0 rows affected (0.05 sec)
+
+ERROR: 
+No query specified
+
+mysql> create view par as select * from emp;
+ERROR 1050 (42S01): Table 'par' already exists
+mysql> create view par as select * from emp;
+ERROR 1050 (42S01): Table 'par' already exists
+mysql> ;
+ERROR: 
+No query specified
+
+mysql> select * from par;
++------------+-----------+--------+--------+---------------+
+| First_Name | Last_Name | Emp_Id | Salary | desig         |
++------------+-----------+--------+--------+---------------+
+| Paras      | Agarwal   |      1 | 400000 | Software_Engg |
+| Mohit      | Agarwal   |      2 | 200000 | Tester        |
+| Rohit      | Agarwal   |      3 | 300000 | Analyst       |
++------------+-----------+--------+--------+---------------+
+3 rows in set (0.04 sec)
+
+mysql> select First_Name from emp like "p%";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like "p%"' at line 1
+mysql> select * from emp where First_Name like "p%";
++------------+-----------+--------+--------+---------------+
+| First_Name | Last_Name | Emp_Id | Salary | desig         |
++------------+-----------+--------+--------+---------------+
+| Paras      | Agarwal   |      1 | 400000 | Software_Engg |
++------------+-----------+--------+--------+---------------+
+1 row in set (0.01 sec)
+
+mysql> select * from emp where First_Name like "p_r%";
++------------+-----------+--------+--------+---------------+
+| First_Name | Last_Name | Emp_Id | Salary | desig         |
++------------+-----------+--------+--------+---------------+
+| Paras      | Agarwal   |      1 | 400000 | Software_Engg |
++------------+-----------+--------+--------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select upper(First_Name) from emp;
++-------------------+
+| upper(First_Name) |
++-------------------+
+| PARAS             |
+| MOHIT             |
+| ROHIT             |
++-------------------+
+3 rows in set (0.02 sec)
+
+mysql> alter table emp add doj varchar(20);
+Query OK, 0 rows affected (0.50 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update emp set doj="2012-04-06" where Emp_Id=1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++------------+-----------+--------+--------+---------------+------------+
+| First_Name | Last_Name | Emp_Id | Salary | desig         | doj        |
++------------+-----------+--------+--------+---------------+------------+
+| Paras      | Agarwal   |      1 | 400000 | Software_Engg | 2012-04-06 |
+| Mohit      | Agarwal   |      2 | 200000 | Tester        | NULL       |
+| Rohit      | Agarwal   |      3 | 300000 | Analyst       | NULL       |
++------------+-----------+--------+--------+---------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select getdate() as currentdatetime;
+ERROR 1305 (42000): FUNCTION data.getdate does not exist
+mysql> 
+
