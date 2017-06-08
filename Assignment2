@@ -1,0 +1,149 @@
+/*Query 1*/
+
+select 
+	gender,
+	count(name),
+	DeptName 
+from Employees 
+	left join Department on Employees.DeptID=Department.DeptID  
+group by gender,DeptName;
+
+
+/*Query 2*/
+
+
+select 
+	Total_Salary,
+	count(name),
+	DeptName,
+	max(Total_Salary) as Highest_Gross_Salary 
+from Employees 
+	left join Department on Employees.DeptID=Department.DeptID 
+group by DeptName;
+
+/*Query 3*/
+
+
+
+select
+	Name,
+	DeptName,
+	max(Total_Salary) as Highest_Gross_Salary 
+from Employees 
+	left join Department on Employees.DeptID=Department.DeptID 
+group by DeptName;
+
+
+/*Query 4*/
+
+Select 
+	Id,
+	Name 
+from Employees 
+	where Total_Salary>15000;
+
+
+ 
+/*Query 5*/
+
+
+Select 
+	max(Basic),
+	Id,
+	Name 
+from Employees 
+	where Basic<(select max(Basic) from Employees); 
+
+
+
+
+/*Query 6*/
+
+
+select 
+	count(Name),
+	DeptName
+from Employees
+	left join Department on Employees.DeptID=Department.DeptID 
+group by DeptName
+	having count(name)>3;
+
+
+
+
+
+
+/*Query 7*/
+
+
+
+select 
+	DeptName,
+	Name 
+from Employees
+	left join Department on Employees.Id=Department.DeptHeadID;
+
+
+/*Query 8*/
+
+
+
+
+select
+	Id,name	
+from Employees
+	left join EmployeeAttendance on Employees.Id=EmployeeAttendance.EmpID
+group by EmpID
+	having sum(WorkingDays)=sum(PresentDays);
+
+
+
+/*Query 9*/
+
+select 
+         Name,
+    Id
+    from
+(select
+		Id,
+		Name,
+		sum(WorkingDays-PresentDays) as Ab
+	from Employees
+		left join EmployeeAttendance on Employees.Id=EmployeeAttendance.EmpID
+	group by EmpID
+) BA
+
+inner join
+
+ (
+	select 
+		Name,
+		max(B.Ab)
+	from
+		(select
+			Id,
+			name,
+			sum(WorkingDays-PresentDays) as Ab
+		from Employees
+			left join EmployeeAttendance on Employees.Id=EmployeeAttendance.EmpID
+		group by EmpID
+		) B
+ )AA;
+
+
+
+
+
+
+
+/*Query 10*/
+
+select
+	Id,
+	name,
+	max(WorkingDays-PresentDays)>3
+from Employees
+	left join EmployeeAttendance on Employees.Id=EmployeeAttendance.EmpID
+group by EmpID;
+
+
